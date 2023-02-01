@@ -1,30 +1,29 @@
+/*
 package com.example.demo.service;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.exception.CustomerNotFoundException;
 import com.example.demo.mapper.ObjectMapper;
-import com.example.demo.model.CustomerModel;
-import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.CustomerMySqlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
-public class CustomerService {
+public class CustomerMySqlService {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerMySqlRepository customerMySqlRepository;
     private final ObjectMapper objectMapper;
 
     public void updateCustomerDetails(Customer customer){
-        customerRepository.save(customer);
+        customerMySqlRepository.save(customer);
     }
 
     public Customer findCustomerById(String id){
-        return customerRepository.findById(Integer.valueOf(id)).orElseThrow(
+        return customerMySqlRepository.findById(id).orElseThrow(
             (()->{throw new CustomerNotFoundException("Customer Not Found");
             }));
     }
 
 }
+*/
