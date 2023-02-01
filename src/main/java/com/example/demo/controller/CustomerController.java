@@ -2,9 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.exception.CustomerNotFoundException;
+import com.example.demo.mapper.ObjectMapper;
 import com.example.demo.model.CustomerModel;
 import com.example.demo.service.CustomerMongoService;
-//import com.example.demo.service.CustomerMySqlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,29 +13,26 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
-//    private final CustomerMySqlService customerMySqlService;
     private final CustomerMongoService customerMongoService;
+    private final ObjectMapper objectMapper;
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateAccountBalance(@PathVariable String id,
-                                                              @RequestBody CustomerModel customerModel){
-/*
-        try {
-            Customer customer = customerMySqlService.findCustomerById(id);
-            customer.setBalance(customerModel.getBalance());
-            customerMySqlService.updateCustomerDetails(customer);
-            return ResponseEntity.ok("Account balance Updated");
-        }catch (CustomerNotFoundException ex){
-            return ResponseEntity.notFound().build();
-        }
-*/
+    public ResponseEntity<CustomerModel> updateAccountBalance(@PathVariable String id,
+                                                              @RequestBody Integer balance){
         try {
             Customer customer = customerMongoService.findCustomerById(id);
-            customer.setBalance(customerModel.getBalance());
+            customer.setBalance(balance);
             customerMongoService.updateCustomerDetails(customer);
-            return ResponseEntity.ok("Account balance Updated");
+            return ResponseEntity.ok(objectMapper.entityToModelMapper(customer));
+
         }catch (CustomerNotFoundException ex){
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping
+    public Customer createCustomer(@RequestBody CustomerModel customerModel){
+        customerMongoService.updateCustomerDetails(objectMapper.modelToEntityMapper(customerModel));
+        return objectMapper.modelToEntityMapper(customerModel);
     }
 
 }

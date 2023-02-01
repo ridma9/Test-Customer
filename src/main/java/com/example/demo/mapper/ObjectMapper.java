@@ -3,7 +3,9 @@ package com.example.demo.mapper;
 import com.example.demo.entity.Customer;
 import com.example.demo.model.CustomerModel;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ObjectMapper {
 
     private final ModelMapper mapper;

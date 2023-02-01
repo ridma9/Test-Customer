@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.exception.CustomerNotFoundException;
-import com.example.demo.mapper.ObjectMapper;
 import com.example.demo.repository.CustomerMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
